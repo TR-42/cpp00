@@ -6,13 +6,14 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 21:06:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/19 23:14:37 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/20 00:39:27 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
 
 #include <string>
+#include <iostream>
 
 class Contact
 {
@@ -35,7 +36,9 @@ public:
 	);
 
 	std::string toString() const;
-	std::string getDetail() const;
+	std::ostream& setToStream(std::ostream &os) const;
 
 	Contact &operator= (const Contact &from);
 };
+
+std::ostream& operator<<(std::ostream &os, const Contact v);

@@ -6,9 +6,11 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:44:10 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/19 23:14:31 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/20 00:49:17 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <iomanip>
 
 #include "Contact.hpp"
 
@@ -40,12 +42,21 @@ Contact::Contact(
 
 std::string Contact::toString() const
 {
-	return std::string();
+	return
+		"    First Name: " + this->_firstName + "\n"
+		"     Last Name: " + this->_lastName + "\n"
+		"      Nickname: " + this->_nickname + "\n"
+		"  Phone Number: " + this->_phoneNumber + "\n"
+		"Darkest Secret: " + this->_darkestSecret + "\n";
 }
 
-std::string Contact::getDetail() const
+std::ostream &Contact::setToStream(std::ostream &os) const
 {
-	return std::string();
+	os << '|'
+		<< std::setw(10) << this->_firstName.substr(0, 10) << '|'
+		<< std::setw(10) << this->_lastName.substr(0, 10) << '|'
+		<< std::setw(10) << this->_nickname.substr(0, 10) << '|';
+	return os;
 }
 
 Contact &Contact::operator=(const Contact &from)
@@ -56,4 +67,9 @@ Contact &Contact::operator=(const Contact &from)
 	this->_phoneNumber = from._phoneNumber;
 	this->_darkestSecret = from._darkestSecret;
 	return *this;
+}
+
+std::ostream &operator<<(std::ostream &os, const Contact v)
+{
+	return (v.setToStream(os));
 }
