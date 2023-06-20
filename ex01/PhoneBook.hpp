@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:44:04 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/20 00:38:18 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/20 22:55:01 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ public:
 	void add(const Contact &contact);
 	void printDetail() const;
 	bool printOne(int index) const;
+	bool isEmpty() const;
 };

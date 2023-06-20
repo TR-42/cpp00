@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:44:10 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/20 00:49:17 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/20 22:50:49 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,31 @@ std::string Contact::toString() const
 		"Darkest Secret: " + this->_darkestSecret + "\n";
 }
 
+static std::string trunc(std::string s)
+{
+	if (10 < s.length())
+		return (s.substr(0, 9) + ".");
+	return s;
+}
+
 std::ostream &Contact::setToStream(std::ostream &os) const
 {
 	os << '|'
-		<< std::setw(10) << this->_firstName.substr(0, 10) << '|'
-		<< std::setw(10) << this->_lastName.substr(0, 10) << '|'
-		<< std::setw(10) << this->_nickname.substr(0, 10) << '|';
+		<< std::setw(10) << trunc(this->_firstName) << '|'
+		<< std::setw(10) << trunc(this->_lastName) << '|'
+		<< std::setw(10) << trunc(this->_nickname) << '|';
 	return os;
+}
+
+bool Contact::isValid() const
+{
+	return (
+		!this->_firstName.empty()
+		&& !this->_lastName.empty()
+		&& !this->_nickname.empty()
+		&& !this->_phoneNumber.empty()
+		&& !this->_darkestSecret.empty()
+	);
 }
 
 Contact &Contact::operator=(const Contact &from)

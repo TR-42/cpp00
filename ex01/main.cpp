@@ -6,23 +6,114 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:48:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/20 00:41:08 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/20 23:01:58 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
+#include <string>
+#include <stdlib.h>
 
 #include "PhoneBook.hpp"
+
+#define STR(v) #v
+
+#define CMD_ADD "ADD"
+#define CMD_SEARCH "SEARCH"
+#define CMD_EXIT "EXIT"
+
+#define SET_STR(v) \
+	while (v.length() == 0) {\
+		std::cout << #v " > ";\
+		std::cin >> v;\
+		if (std::cin.eof())\
+			exit(1);\
+		if (v.length() == 0)\
+			std::cout << "ERR! Empty field is not allowed," << std::endl;\
+	}\
+
+static void do_add(PhoneBook& pb)
+{
+	std::string
+		firstName,
+		lastName,
+		nickname,
+		phoneNumber,
+		darkestSecret
+	;
+
+	SET_STR(firstName);
+	SET_STR(lastName);
+	SET_STR(nickname);
+	SET_STR(phoneNumber);
+	SET_STR(darkestSecret);
+
+	Contact c(
+		firstName,
+		lastName,
+		nickname,
+		phoneNumber,
+		darkestSecret
+	);
+	pb.add(c);
+	std::cout << "Contact successfully added!" << std::endl << c.toString() << std::endl;
+}
+
+static void do_search(const PhoneBook& pb)
+{
+	pb.printDetail();
+
+	if (pb.isEmpty())
+	{
+		std::cout << "PhoneBook is empty" << std::endl;
+		return;
+	}
+
+	std::string index;
+	int indexNum;
+
+	SET_STR(index);
+	try
+	{
+		indexNum = stoi(index);
+	}
+	catch(const std::exception& e)
+	{
+		std::cerr << e.what() << std::endl;
+		return;
+	}
+	if (pb.printOne(indexNum))
+		return;
+	else
+		std::cout << "ERR! Invalid Input" << std::endl;
+}
+
+static bool loop(PhoneBook& pb)
+{
+	std::cout << "(" CMD_ADD "|" CMD_SEARCH "|" CMD_EXIT ") > ";
+	std::string input;
+	std::cin >> input;
+
+	if (input.compare(CMD_ADD) == 0)
+		do_add(pb);
+	else if (input.compare(CMD_SEARCH) == 0)
+		do_search(pb);
+	else if (input.compare(CMD_EXIT) == 0 || std::cin.eof())
+	{
+		std::cout << "Good Bye!" << std::endl;
+		return (false);
+	}
+	else
+		std::cout << "Please try again!" << std::endl;
+
+	return (true);
+	
+}
 
 int main(void)
 {
 	PhoneBook book;
 
-	book.add(Contact("first", "last", "nickname", "phone num", "secret"));
-	book.add(Contact("uh?? first!?", "long long last", "bad nickname", "phone num", "secret"));
-	book.printDetail();
-	std::cout << std::endl;
-	for (int i = 1; i < book.CONTACT_LIST_LENGTH; i++)
-		book.printOne(i);
+	while (loop(book));
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:47:46 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/20 00:49:49 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/20 22:56:11 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,15 @@ void PhoneBook::printDetail() const
 
 bool PhoneBook::printOne(int index) const
 {
-	if (index <= 0 || this->CONTACT_LIST_LENGTH < index)
+	if (index <= 0
+		|| this->CONTACT_LIST_LENGTH < index
+		|| !this->_contactList[index - 1].isValid())
 		return (false);
 	std::cout << this->_contactList[index - 1].toString();
 	return true;
+}
+
+bool PhoneBook::isEmpty() const
+{
+	return !this->_contactList[0].isValid();
 }

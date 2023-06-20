@@ -6,7 +6,7 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 21:06:27 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/20 00:39:27 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/20 22:49:29 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ public:
 
 	std::string toString() const;
 	std::ostream& setToStream(std::ostream &os) const;
+	bool isValid() const;
 
 	Contact &operator= (const Contact &from);
 };
