@@ -6,13 +6,12 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/19 22:48:06 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/20 23:01:58 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/23 00:18:55 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
-#include <stdlib.h>
 
 #include "PhoneBook.hpp"
 
@@ -59,6 +58,22 @@ static void do_add(PhoneBook& pb)
 	std::cout << "Contact successfully added!" << std::endl << c.toString() << std::endl;
 }
 
+static bool isNumericStr(const std::string& s)
+{
+	if (s.empty())
+		return (false);
+	const char *c = s.c_str();
+
+	while (*c != '\0')
+	{
+		if (!std::isdigit(*c))
+			return (false);
+		c++;
+	}
+
+	return (true);
+}
+
 static void do_search(const PhoneBook& pb)
 {
 	pb.printDetail();
@@ -73,15 +88,13 @@ static void do_search(const PhoneBook& pb)
 	int indexNum;
 
 	SET_STR(index);
-	try
+
+	if (!isNumericStr(index))
 	{
-		indexNum = stoi(index);
-	}
-	catch(const std::exception& e)
-	{
-		std::cerr << e.what() << std::endl;
+		std::cerr << "ERR! Input was non-numeric str" << std::endl;
 		return;
 	}
+	indexNum = std::atoi(index.c_str());
 	if (pb.printOne(indexNum))
 		return;
 	else
@@ -107,7 +120,6 @@ static bool loop(PhoneBook& pb)
 		std::cout << "Please try again!" << std::endl;
 
 	return (true);
-	
 }
 
 int main(void)
