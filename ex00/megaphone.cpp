@@ -6,12 +6,11 @@
 /*   By: kfujita <kfujita@student.42tokyo.jp>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 21:20:16 by kfujita           #+#    #+#             */
-/*   Updated: 2023/06/12 21:35:05 by kfujita          ###   ########.fr       */
+/*   Updated: 2023/06/23 00:22:16 by kfujita          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
-#include <stddef.h>
 
 int main(int argc, char *argv[])
 {
@@ -23,7 +22,11 @@ int main(int argc, char *argv[])
 	while (++i < (size_t)argc)
 	{
 		std::string str = std::string(argv[i]);
-		std::transform(str.begin(), str.end(), str.begin(), ::toupper);
+		for (std::string::iterator it = str.begin(); it != str.end(); it++)
+		{
+			if (islower(*it))
+				*it = std::toupper(*it);
+		}
 		std::cout << str;
 	}
 	std::cout << std::endl;
